@@ -1,0 +1,38 @@
+import cv2
+import os
+import numpy as np
+
+# Create folder to save frames with has a part of black backgroud
+if not os.path.exists('frames_has_black_background'):
+    os.makedirs('frames_has_black_background')
+# Read video
+cap = cv2.VideoCapture('D:/cuoc_thi/Basic/Intersection.mp4')
+frame_count = 0
+# Generate random
+rng = np.random.default_rng()
+while True:
+    # Read each of frame in video
+    ret, frame = cap.read()
+    if ret:
+        #Convert frame to grayscale
+        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #Flip frame
+        flipped_frame = cv2.flip(gray_frame, 1)
+        #Rotate frame with random degree from -15 degree to 15 degree
+        angle = rng.integers(-15, 15)
+        (h, w) = flipped_frame.shape[:2]
+        center = (w // 2, h // 2)
+        M = cv2.getRotationMatrix2D(center, angle, 1.0)
+        rotated_frame = cv2.warpAffine(flipped_frame, M, (w, h))
+
+        # Add noise
+        noisy_frame = rotated_frame + np.random.normal(0, 10, rotated_frame.shape)
+        # Save frame to the folder
+        cv2.imwrite('frames_has_black_background/frame{:d}.jpg'.format(frame_count), noisy_frame)
+        frame_count += 1
+    else:
+        break
+
+# Release
+cap.release()
+cv2.destroyAllWindows()
