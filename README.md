@@ -12,5 +12,6 @@ This is the source code for 2 situation:
 
 
 The folder output of each situation in this GoogleDrive link: https://drive.google.com/drive/folders/1zGsDDZ7J4Y2HJpgbaTMtvFNN9K8rQ0Uj?usp=sharing
+
 "frame_has_black_background" is the output of situation 1
 "frame_has_not_black_background" is the output of situation 2
